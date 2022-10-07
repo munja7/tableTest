@@ -6,18 +6,18 @@ table.table
         th Название
         th Количетсво
         th Расстояние
-        <!-- th(v-for="row in rows",@click="sortBy(row)") {{ changeKeyNmae(row) }}
-          span(class="arrow", :class="reverse ? 'asc' : 'dsc'", v-if="sortKey==row") -->
+        //-  th(v-for="row in rows",@click="sortBy(row)") {{ changeKeyNmae(row) }}
+        //-   span(class="arrow", :class="reverse ? 'asc' : 'dsc'", v-if="sortKey==row") 
     tbody
-      tr(v-for="n in 10")
-        td {{date}}
-        td Lorem ipsum dolor 
-        td Lorem ipsum dolor sit amet 
-        td Lorem ipsum dolor sit amet 
+      tr(v-for="flight in flights")
+        td {{flight.date}}
+        td {{flight.name}} 
+        td {{flight.amount}} 
+        td {{flight.distance}} 
 </template>
 <script>
 export default {
-    name: 'ContentTable',
+    name: 'FlightTable',
     data(){
         return{
             
@@ -26,7 +26,10 @@ export default {
     computed:{
         date(){
             return new Date().toLocaleDateString();
-        }
+        },
+        flights(){
+            return this.$store.getters.getFlights;
+        },
     }
 }
 </script>

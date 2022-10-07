@@ -6,14 +6,11 @@
         FilterInput
 </template>
 <script>
-import FilterSelect from './FilterSelect.vue';
-import FilterInput from './FilterInput.vue';
-
 export default {
-    name: 'TableFilter',
+    name: 'FlightFilter',
     components:{
-    FilterSelect,
-    FilterInput
+    FilterSelect: () => import("@/components/FilterSelect.vue"),
+    FilterInput: () => import("@/components/FilterInput.vue"),
 },
 }
 </script>
