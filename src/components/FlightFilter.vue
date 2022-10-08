@@ -1,9 +1,10 @@
 <template lang="pug">
 .filter Table filter
     .filter__content
-        FilterSelect
-        FilterSelect
+        FilterSelect(:selectOptions="selectColumnOptions" name="column")
+        FilterSelect(:selectOptions="selectCriteriaOptions" name="criteria")
         FilterInput
+        button(@click="filter") Применить фильтр
 </template>
 <script>
 export default {
@@ -12,6 +13,17 @@ export default {
     FilterSelect: () => import("@/components/FilterSelect.vue"),
     FilterInput: () => import("@/components/FilterInput.vue"),
 },
+data(){
+    return{
+        selectColumnOptions:['Дата', 'Название', 'Количество', 'Расстояние'],
+        selectCriteriaOptions:['Равно', 'Больше', 'Меньше', 'Содержит'],
+    }
+},
+methods:{
+    filter(){
+
+    }
+}
 }
 </script>
 <style lang="sass">
