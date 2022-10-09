@@ -1,5 +1,5 @@
 <template lang="pug">
-table.table
+table.table(v-if="flights")
     thead
       tr
         th Дата
@@ -18,19 +18,16 @@ table.table
 <script>
 export default {
     name: 'FlightTable',
-    data(){
-        return{
-            
-        }
-    },
+    data: ()=>({}),
     computed:{
         date(){
             return new Date().toLocaleDateString();
         },
         flights(){
-            return this.$store.getters.getFlights;
+            return this.$store.state.data;
+            // return this.$store.getters.getFlights;
         },
-    }
+    },
 }
 </script>
 <style lang="sass">

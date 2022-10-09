@@ -2,10 +2,7 @@
 .flight-schedule
 	FlightFilter
 	FlightTable
-	FlightPagination(:totalPages="10"
-      :perPage="10"
-      :currentPage="currentPage"
-      @pagechanged="onPageChange")
+	FlightPagination
 </template>
 
 <script>
@@ -16,16 +13,8 @@ export default {
 		FlightTable: () => import("@/components/FlightTable.vue"),
 		FlightPagination: () => import("@/components/FlightPagination.vue"),
 	},
-	data () {
-    return {
-      currentPage: 1,
-    };
-  },
+	data: ()=>({}),
   methods: {
-    onPageChange(page) {
-      console.log(page)
-      this.currentPage = page;
-    }
   }
 }
 </script>

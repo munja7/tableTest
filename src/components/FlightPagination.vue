@@ -2,16 +2,17 @@
 //- .pagination 
 //- 	PaginateBtn(btnText="Назад")
 //- 	PaginateBtn(btnText="Вперед")
-ul.pagination
-	li.pagination__item
-		button(type="button" @click="onClickFirstPage" :disabled="isInFirstPage")
-			| В начало
-	li.pagination__item(v-for="page in pages" :key="page.name")
-		button(type="button" @click="onClickPage(page.name)" :disabled="page.isDisabled" :class="{ active: isPageActive(page.name) }")
-			| {{ page.name }}
-	li.pagination__item
-		button(type="button" @click="onClickLastPage" :disabled="isInLastPage")
-			| В конец
+section
+  ul.pagination
+    li.pagination__item
+      button(type="button" @click="onPageChange(1)" :disabled="page === 'first'")
+        | В начало
+    li.pagination__item(v-for="page in pages" :key="page.name")
+      button(type="button" @click="onPageChange(page.name)" :disabled="page.isDisabled" :class="{ active: isPageActive(page.name) }")
+        | {{ page.name }}
+    li.pagination__item
+      button(type="button" @click="onPageChange(totalPages)" :disabled="page === 'last'")
+        | В конец
 </template>
 
 <script>
@@ -25,20 +26,21 @@ export default {
 				required: false,
 				default: 3
 			},    
-			totalPages: {
-				type: Number,
-				required: true
-			},
-			perPage: {
-				type: Number,
-				required: true
-			},
-			currentPage: {
-				type: Number,
-				required: true
-			}
   },
+  created(){
+    console.log('this.GET_FLIGHTS_FROM_DB');
+    this.$store.dispatch('GET_FLIGHTS_FROM_DB', {from: 0, to: this.perPage -1});
+    },
+  data: ()=>({
+    currentPage: 1,
+  }),
 	computed: {
+    totalPages(){
+      return this.$store.getters.getTotalPages;
+    },
+    perPage(){
+      return this.$store.state.perPage;
+    },
     startPage() {
       // When on the first page
       if (this.currentPage === 1) {
@@ -69,22 +71,15 @@ export default {
 
       return range;
     },
-		isInFirstPage() {
-      return this.currentPage === 1;
-    },
-    isInLastPage() {
-      return this.currentPage === this.totalPages;
+    page(){
+      return this.currentPage === 1 ? 'first' : this.currentPage === this.totalPages ? 'last' : '';
     },
   },
 	methods: {
-    onClickFirstPage() {
-      this.$emit('pagechanged', 1);
-    },
-    onClickPage(page) {
-      this.$emit('pagechanged', page);
-    },
-    onClickLastPage() {
-      this.$emit('pagechanged', this.totalPages);
+    onPageChange(page) {
+      console.log(page)
+      this.$store.dispatch('GET_FLIGHTS_FROM_DB', {from: (page - 1) * this.perPage, to: (page - 1) * this.perPage + this.perPage });
+      this.currentPage = page;
     },
 		isPageActive(page) {
       return this.currentPage === page;

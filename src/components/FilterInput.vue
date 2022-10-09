@@ -1,6 +1,6 @@
 <template lang="pug">
 .filter-input Filter Input
-    input(v-model="value" type="text", placeholder="введите значение" :blur="inputHandler()")
+    input(v-model.lazy.trim="value" type="text", placeholder="введите значение" @blur="inputHandler")
 </template>
 <script>
 export default {

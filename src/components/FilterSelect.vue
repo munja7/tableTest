@@ -1,6 +1,6 @@
 <template lang="pug">
 .filter-select Filter Select
-    select(v-model="selectValue" :name="name" :onchange="selectHandler()")
+    select(v-model="selectValue" :name="name" @change="selectHandler()")
         option(v-for="(item, index) in selectOptions", :key="index") 
             | {{item}}
 </template>
@@ -17,11 +17,9 @@ export default {
             default:()=>(''),
         }
     },
-    data() {
-        return{
-            selectValue: '',  
-        }
-    },
+    data: ()=>({
+        selectValue: '',
+    }),
     methods:{
         selectHandler(){
             this.name === 'column' ? this.$store.commit('set_filterColumn', this.selectValue) : this.$store.commit('set_filterCriteria', this.selectValue);
